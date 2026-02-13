@@ -28,6 +28,23 @@ COPY authorized_keys /root/.ssh
 
 RUN chmod 600 /root/.ssh/authorized_keys
 
+
+RUN useradd -m -s /bin/bash admin && \
+    echo "admin:admin2026" | chpasswd && \
+    usermod -aG sudo admin
+
+RUN echo "admin ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+RUN echo 'export $(strings /proc/1/environ | grep -v "{" | xargs)' >> /home/admin/.bashrc
+
+WORKDIR /home/admin
+
+RUN mkdir -p .ssh && chmod 700 .ssh
+
+COPY authorized_keys .ssh
+
+RUN chmod 600 .ssh/authorized_keys
+
 # Expose portu 22
 EXPOSE 22
 
