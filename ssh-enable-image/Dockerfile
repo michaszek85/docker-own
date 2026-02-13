@@ -17,6 +17,10 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 # Tutaj tworzymy strukturę katalogów
 RUN mkdir -p /root/.ssh && chmod 700 /root/.ssh
 
+COPY authorized_keys /root/.ssh
+
+RUN chmod 600 /root/.ssh/authorized_keys
+
 # Expose portu 22
 EXPOSE 22
 
