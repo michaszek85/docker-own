@@ -39,11 +39,11 @@ RUN echo 'export $(strings /proc/1/environ | grep -v "{" | xargs)' >> /home/admi
 
 WORKDIR /home/admin
 
-RUN mkdir -p .ssh && chmod 700 .ssh
+RUN mkdir -p .ssh && chmod 700 .ssh  
 
 COPY authorized_keys .ssh
 
-RUN chmod 600 .ssh/authorized_keys
+RUN chmod 600 .ssh/authorized_keys && chown -R admin. .ssh
 
 # Expose portu 22
 EXPOSE 22
